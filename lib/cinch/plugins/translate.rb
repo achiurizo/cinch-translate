@@ -6,13 +6,13 @@ module Cinch
     class Translate
       include Cinch::Plugin
 
-      match %r{t (.+?) (.+)},              :method => :translate
-      match %r{tf (.+?) (.+?) (.+)},       :method => :translate_from
-      match "languages?",                  :method => :languages
-      match %r{codemap (.+)},              :method => :codemap
-      match "auto_translate",              :method => :auto_translate
-      match %r{auto\_translate to (.+)},   :method => :auto_to
-      match %r{auto\_translate from (.+)}, :method => :auto_from
+      match %r{translate (.+?) (.+)},              :method => :translate
+      match %r{translate\-from (.+?) (.+?) (.+)},   :method => :translate_from
+      match "languages?",                          :method => :languages
+      match %r{codemap (.+)},                      :method => :codemap
+      match "auto_translate",                      :method => :auto_translate
+      match %r{auto\_translate to (.+)},           :method => :auto_to
+      match %r{auto\_translate from (.+)},         :method => :auto_from
 
       listen_to :channel
 
