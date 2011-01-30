@@ -6,21 +6,34 @@ module Cinch
     class Translate
       include Cinch::Plugin
 
-      def initialize(*args)
-        ToLang.start(config[:api_key])
-      end
-
       match %r{t (.+?) (.+)},        :method => :translate
       match %r{tf (.+?) (.+?) (.+)}, :method => :translate_from
+      match "languages?",            :method => :languages
+      match %r{codemap (.+)},        :method => :codemap
+
+      def initialize(*args)
+        super
+        ::ToLang.start config[:api_key]
+      end
 
       def translate(m, lang, message)
-        m.reply message.translate(lang)
+        translation = message.translate(lang) rescue "That's not a valid language."
+        m.reply translation
       end
 
       def translate_from(m, from, to, message)
-        m.reply message.translate(to, :from => from)
+        translation = message.translate(to, :from => from) rescue "That's not a valid language."
+        m.reply translation
       end
 
+      def languages(m)
+        m.reply ::ToLang::CODEMAP.keys.join(',')
+      end
+
+      def codemap(m, lang)
+        code = ::ToLang::CODEMAP[lang] || 'No code exists for that language.'
+        m.reply code
+      end
     end
   end
 end
