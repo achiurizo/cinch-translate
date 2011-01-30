@@ -10,6 +10,12 @@ context "Translate" do
     Cinch::Plugins::Translate
   end
 
+  context "#initialize" do
+    setup { base.new(@bot) }
+    asserts_topic.assigns :auto
+    asserts_topic.assigns :to
+  end
+
   context "#translate" do
     context "with language" do
       asserts 'that it translates' do
@@ -69,6 +75,28 @@ context "Translate" do
         @m.expects(:reply).with('No code exists for that language.').returns(true)
         base.new(@bot).codemap @m, 'bakaaa'
       end
+    end
+  end
+
+  context "#auto_translate" do
+    
+    asserts "that it gets switched" do
+      @m.expects(:reply).with("Auto Translate is on").returns(true)
+      base.new(@bot).auto_translate @m
+    end
+  end
+
+  context "#auto_to" do
+    asserts 'that it assigns to language' do
+      @m.expects(:reply).with("To Language set to en").returns(true)
+      base.new(@bot).auto_to @m, 'en'
+    end
+  end
+
+  context "#auto_from" do
+    asserts 'that it assigns from language' do
+      @m.expects(:reply).with('From Language set to auto').returns(true)
+      base.new(@bot).auto_from @m, 'auto'
     end
   end
 end
