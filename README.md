@@ -65,6 +65,11 @@ Finally, run your bot.
 
 And there you go!
 
+CAVEAT
+------
+
+This Plugin assumes you are using the default command prefix of '!'.
+This is to prevent the auto translator from picking up your commands.
 
 TODO
 -----
